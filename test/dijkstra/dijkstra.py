@@ -2,16 +2,17 @@ import sys
 from heapq import nsmallest
 
 table = [
-    [1, 3, 5, 7],
-    [8, 2, 4, 0],
-    [9, 6, 10, 11],
+    [1, 3, 5, 7, 23, 43, 54, 65, 76, 87, 84],
+    [8, 2, 4, 0, 78, 64, 21, 82, 50, 26, 82],
+    [9, 6, 10, 11, 54554, 57647, 656, 65, 65],
+    [424, 4543, 434, 43543, 23423465]
 ]
 
 non_visited_nodes = []
 lowest_distance = {}
 previous_node = {}
 start = (0,0)
-goal = (2,3)
+goal = (3,4)
 win = False
 
 
@@ -83,6 +84,17 @@ def check_node(tab, num, min_dist, coords):
         previous_node[node] = num
 
 
+def get_path(tab, prev_node, coords, start):
+    num = tab[coords[0]][coords[1]]
+    path = []
+    while num != tab[start[0]][start[1]]:
+        path.append(num)
+        num = prev_node[num]
+    
+    path.append(num)
+    print(f'SHORTEST PATH: {path}')
+
+
 if __name__ == "__main__":
     for line in table:
         for node in line:
@@ -101,10 +113,12 @@ if __name__ == "__main__":
         res = check_nodes(table, minimum, minimum_distance, minimum_coords)
         if res:
             print(f'SUCCESS: found {table[res[0]][res[1]]}\nunseen nodes {non_visited_nodes}\ndistances {lowest_distance}\nprevious nodes {previous_node}')
+            get_path(table, previous_node, res, start)
             break
 
         if minimum_coords == goal:
             print(f'SUCCESS: found {minimum}\nunseen nodes {non_visited_nodes}\ndistances {lowest_distance}\nprevious nodes {previous_node}')
+            get_path(table, previous_node, minimum_coords, start)
             break
 
         non_visited_nodes.remove(minimum)

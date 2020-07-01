@@ -1,0 +1,2 @@
+ijkstra(table)
+dj.run()

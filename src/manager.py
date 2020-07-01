@@ -1,10 +1,20 @@
 from dijkstra.dijkstra import Dijkstra
 
-table = [
-    ['1', '3', '5', '7', '23', '43', '54', '65', '76', '87', '84'],
-    ['8', '2', '4', '0', '78', '64', '21', '82', '50', '26', '82'],
-    ['9', '6', 'end', 'start']
-]
+
+def make_empty_table(height, width):
+    table = []
+    for y in range(height):
+        line = []
+        for x in range(width):
+            line.append(f'space{y}{x}')
+        table.append(line)
+    return(table)
+
+
+table = make_empty_table(10,7)
+table[0][0] = 'start'
+table[7][5] = 'end'
+
 
 dj = Dijkstra(table)
 dj.run()

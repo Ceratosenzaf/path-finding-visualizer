@@ -1,5 +1,4 @@
 import sys
-from heapq import nsmallest
 
 table = [
     [1, 3, 5, 7, 23, 43, 54, 65, 76, 87, 84],
@@ -13,7 +12,6 @@ lowest_distance = {}
 previous_node = {}
 start = (0,0)
 goal = (3,4)
-win = False
 
 
 def get_minimum_distance_node(low_dist, unseen):

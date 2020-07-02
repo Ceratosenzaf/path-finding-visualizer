@@ -1,5 +1,5 @@
 import sys
-from utils.default_structure import Default
+from src.utils.default_structure import Default
 
 
 class Dijkstra(Default):

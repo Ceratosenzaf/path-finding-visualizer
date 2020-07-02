@@ -1,2 +1,0 @@
-ijkstra(table)
-dj.run()

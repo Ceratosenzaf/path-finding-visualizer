@@ -62,27 +62,27 @@ def run():
         # draw table
         for y in range (table_height):
             for x in range (table_width):
-                if table[x][y] == 'start':
+                if table[x][y] == 'start':      # start
                     color = (68, 227, 21)
                     pygame.draw.rect(screen, color, pygame.Rect(x * 31 + sp_x/2, y * 31 + sp_y - sp_x/2, 30, 30))
                 
-                elif table[x][y] == 'end':
+                elif table[x][y] == 'end':      # end
                     color = (227, 21, 21)
                     pygame.draw.rect(screen, color, pygame.Rect(x * 31 + sp_x/2, y * 31 + sp_y - sp_x/2, 30, 30))
 
-                elif table[x][y].startswith('space') and f'space-{x}-{y}' in dj.non_visited_nodes:
+                elif table[x][y].startswith('space') and f'space-{x}-{y}' in dj.non_visited_nodes:      # empty
                     color = (222,222,222)
                     pygame.draw.rect(screen, color, pygame.Rect(x * 31 + sp_x/2, y * 31 + sp_y - sp_x/2, 30, 30))
 
-                elif table[x][y].startswith('wall'):
+                elif table[x][y].startswith('wall'):        # wall
                     color = (0,0,0)
                     pygame.draw.rect(screen, color, pygame.Rect(x * 31 + sp_x/2, y * 31 + sp_y - sp_x/2, 30, 30))
 
-                elif f'space-{x}-{y}' not in dj.non_visited_nodes:
+                elif f'space-{x}-{y}' not in dj.non_visited_nodes:      # visited
                     color = (241, 159, 248)
                     pygame.draw.rect(screen, color, pygame.Rect(x * 31 + sp_x/2, y * 31 + sp_y - sp_x/2, 30, 30))
 
-                for node in dj.path:
+                for node in dj.path:        # quick path
                     if node.endswith(f'space-{x}-{y}'):
                         color = (91, 97, 215)
                         pygame.draw.rect(screen, color, pygame.Rect(x * 31 + sp_x/2, y * 31 + sp_y - sp_x/2, 30, 30))
@@ -118,6 +118,7 @@ def run():
                     pass
 
             # handle wheel click on board (move objects)
+            #! To Do
            
             
             # start algo

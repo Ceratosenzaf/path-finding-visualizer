@@ -44,6 +44,8 @@ def run():
         if run_algo:
             if dj.non_visited_nodes and dj.path == []:
                 result = dj.run()
+                if result == None: # if there is no path
+                    run_algo = False
             else:
                 run_algo = False
 
@@ -56,7 +58,7 @@ def run():
         screen.blit(pygame.font.SysFont('Arial', 25).render('RUN ALGO', True, (0,0,0)), (WIDTH / 2 - 145, sp_y / 2 - 15))
 
         clear = pygame.draw.rect(screen, (173, 176, 227), pygame.Rect(WIDTH / 2 + 10, sp_y / 2 - 30, 160, 60))
-        screen.blit(pygame.font.SysFont('Arial', 25).render('CLEAR', True, (0,0,0)), (WIDTH / 2 + 35, sp_y / 2 - 15))
+        screen.blit(pygame.font.SysFont('Arial', 25).render('CLEAR', True, (0,0,0)), (WIDTH / 2 + 50, sp_y / 2 - 15))
 
 
         # draw table

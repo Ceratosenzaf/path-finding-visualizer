@@ -28,44 +28,48 @@ class Dijkstra(Default):
         
 
     def run(self):        # run algorithm
-        # while self.non_visited_nodes:  
-        print('***************************************************************')
         minimum = self.get_minimum_distance_node()
-        minimum_coords = self.get_coordinates(minimum)
-        minimum_distance = self.lowest_distance[minimum]
+        if minimum:
+            minimum_coords = self.get_coordinates(minimum)
+            minimum_distance = self.lowest_distance[minimum]
 
-        res = self.check_nodes(minimum, minimum_distance, minimum_coords)
-        if res:
-            print(f'SUCCESS: found {self.table[res[0]][res[1]]}\nunseen nodes {self.non_visited_nodes}\ndistances {self.lowest_distance}\nprevious nodes {self.previous_node}')
-            print(f'\nSHORTEST PATH: {self.get_path(res)}')
-            return True
+            res = self.check_nodes(minimum, minimum_distance, minimum_coords)
+            if res:
+                print(f'SUCCESS: found {self.table[res[0]][res[1]]}\nSHORTEST PATH: {self.get_path(res)}')
+                return True
 
-        if minimum_coords == self.goal:
-            print(f'SUCCESS: found {minimum}\nunseen nodes {self.non_visited_nodes}\ndistances {self.lowest_distance}\nprevious nodes {self.previous_node}')
-            print(f'\nSHORTEST PATH: {self.get_path(minimum_coords)}')
-            return True
+            if minimum_coords == self.goal:
+                print(f'SUCCESS: found {minimum}\nSHORTEST PATH: {self.get_path(minimum_coords)}')
+                return True
 
-        self.non_visited_nodes.remove(minimum)
+            self.non_visited_nodes.remove(minimum)
 
-        print(f'currently on {minimum}\nunseen nodes {self.non_visited_nodes}\ndistances {self.lowest_distance}\nprevious nodes {self.previous_node}')
-        return None
+            return False
+            
+        else:
+            return None
 
 
     def get_minimum_distance_node(self):
-        l = [k for k in self.lowest_distance.keys() if k in self.non_visited_nodes]
-        li = [self.lowest_distance[k] for k in l]
+        try:
+            l = [k for k in self.lowest_distance.keys() if k in self.non_visited_nodes and self.lowest_distance[k] < sys.maxsize]
+            li = [self.lowest_distance[k] for k in l]
 
-        minimum_index = li.index(min(li))
-        minimum = l[minimum_index]
+            minimum_index = li.index(min(li))
+            minimum = l[minimum_index]
 
-        return minimum
+            return minimum
+
+        except:
+            return None
 
 
     def check_nodes(self, num, min_dist, min_coords):    
         try:   
             x = min_coords[0]
             y = min_coords[1]-1
-            if self.table[x][y] and x >= 0 and y >= 0:
+            node = self.table[x][y]
+            if node and x >= 0 and y >= 0:
                 self.check_node(num, min_dist, (x,y))
             if (x, y) == self.goal:
                 return (x,y)
@@ -75,7 +79,8 @@ class Dijkstra(Default):
         try:
             x = min_coords[0]
             y = min_coords[1]+1
-            if self.table[x][y] and x >= 0 and y >= 0:
+            node = self.table[x][y]
+            if node and x >= 0 and y >= 0:
                 self.check_node(num, min_dist, (x,y))
             if (x, y) == self.goal:
                 return (x,y)
@@ -85,7 +90,8 @@ class Dijkstra(Default):
         try:    
             x = min_coords[0]+1
             y = min_coords[1]
-            if self.table[x][y] and x >= 0 and y >= 0:
+            node = self.table[x][y]
+            if node and x >= 0 and y >= 0:
                 self.check_node(num, min_dist, (x,y))
             if (x, y) == self.goal:
                 return (x,y)
@@ -95,7 +101,8 @@ class Dijkstra(Default):
         try:
             x = min_coords[0]-1
             y = min_coords[1]
-            if self.table[x][y] and x >= 0 and y >= 0:
+            node = self.table[x][y]
+            if node and x >= 0 and y >= 0:
                 self.check_node(num, min_dist, (x,y))
             if (x, y) == self.goal:
                 return (x,y)

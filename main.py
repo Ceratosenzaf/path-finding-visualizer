@@ -20,10 +20,6 @@ sp_x = WIDTH - table_width * 31
 sp_y = HEIGHT - table_height * 31
 
 
-
-
-
-
 # run game
 def run():
     run = True
@@ -42,12 +38,14 @@ def run():
 
         #run algo
         if run_algo:
+            screen.blit(pygame.font.SysFont('Arial', 25).render('Running', True, (173, 176, 227)), (WIDTH / 2 - 35, 20))
             if dj.non_visited_nodes and dj.path == []:
                 result = dj.run()
                 if result == None: # if there is no path
                     run_algo = False
             else:
                 run_algo = False
+
 
         # update table
         table = dj.get_table()
@@ -97,7 +95,7 @@ def run():
                 pygame.quit() 
                 return None
 
-            # handle left click on board
+            # handle left click on board (place wall)
             if pygame.mouse.get_pressed()[0] and not run_algo:
                 try:
                     x,y = event.pos
@@ -108,7 +106,7 @@ def run():
                 except:
                     pass
             
-            # handle right click on board
+            # handle right click on board (remove wall)
             if pygame.mouse.get_pressed()[2] and not run_algo:
                 try:
                     x,y = event.pos
@@ -118,17 +116,20 @@ def run():
                         dj.set_table(table)    
                 except:
                     pass
+
+            # handle wheel click on board (move objects)
+           
             
             # start algo
-            if pygame.mouse.get_pressed()[0] and start.collidepoint(pygame.mouse.get_pos()):
+            if pygame.mouse.get_pressed()[0] and start.collidepoint(pygame.mouse.get_pos()) and not run_algo:
+                dj = Dijkstra(table)
                 run_algo = True
 
             # clear path
-            if pygame.mouse.get_pressed()[0] and clear.collidepoint(pygame.mouse.get_pos()) and run_algo == False:
+            if pygame.mouse.get_pressed()[0] and clear.collidepoint(pygame.mouse.get_pos()) and not run_algo:
                 table = make_empty_table(table_width, table_height, start = (7,6), end=(30,17))
                 dj = Dijkstra(table)
 
-        
         
         pygame.display.update()
 

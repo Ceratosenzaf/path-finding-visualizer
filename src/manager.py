@@ -12,8 +12,6 @@ def make_empty_table(height, width, start, end):
     table[start[0]][start[1]] = 'start'
     table[end[0]][end[1]] = 'end'
 
-    for i in range(20):
-        table[15][i] = table[15][i].replace('space', 'wall') 
 
     return(table)
 

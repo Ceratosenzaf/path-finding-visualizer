@@ -6,13 +6,17 @@ class Default():
 
     def __init__(self, table):
         self.table = table
+        self.path = []
         self.start = self.get_coordinates('start')
         self.goal = self.get_coordinates('end')
-        print('ok')
 
 
     def set_table(self, table):
         self.table = table
+
+    
+    def get_table(self):
+        return(self.table)
 
     
     def get_coordinates(self, search):

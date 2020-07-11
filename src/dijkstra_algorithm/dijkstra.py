@@ -16,39 +16,40 @@ class Dijkstra(Default):
         self.previous_node = {}
 
         super().__init__(table) 
-        
 
-    def run(self):
         # set up variables
         for line in self.table:
             for node in line:
-                self.non_visited_nodes.append(node)
-                self.lowest_distance[node] = sys.maxsize
-                self.previous_node[node] = None
+                if not node.startswith('wall'):
+                    self.non_visited_nodes.append(node)
+                    self.lowest_distance[node] = sys.maxsize
+                    self.previous_node[node] = None
         self.lowest_distance[self.table[self.start[0]][self.start[1]]] = 0
-
-        # run algorithm
-        while self.non_visited_nodes:  
-            print('***************************************************************')
-            minimum = self.get_minimum_distance_node()
-            minimum_coords = self.get_coordinates(minimum)
-            minimum_distance = self.lowest_distance[minimum]
-
-            res = self.check_nodes(minimum, minimum_distance, minimum_coords)
-            if res:
-                print(f'SUCCESS: found {self.table[res[0]][res[1]]}\nunseen nodes {self.non_visited_nodes}\ndistances {self.lowest_distance}\nprevious nodes {self.previous_node}')
-                print(f'\nSHORTEST PATH: {self.get_path(res)}')
-                break
-
-            if minimum_coords == self.goal:
-                print(f'SUCCESS: found {minimum}\nunseen nodes {self.non_visited_nodes}\ndistances {self.lowest_distance}\nprevious nodes {self.previous_node}')
-                print(f'\nSHORTEST PATH: {self.get_path(minimum_coords)}')
-                break
-
-            self.non_visited_nodes.remove(minimum)
-
-            print(f'currently on {minimum}\nunseen nodes {self.non_visited_nodes}\ndistances {self.lowest_distance}\nprevious nodes {self.previous_node}')
         
+
+    def run(self):        # run algorithm
+        # while self.non_visited_nodes:  
+        print('***************************************************************')
+        minimum = self.get_minimum_distance_node()
+        minimum_coords = self.get_coordinates(minimum)
+        minimum_distance = self.lowest_distance[minimum]
+
+        res = self.check_nodes(minimum, minimum_distance, minimum_coords)
+        if res:
+            print(f'SUCCESS: found {self.table[res[0]][res[1]]}\nunseen nodes {self.non_visited_nodes}\ndistances {self.lowest_distance}\nprevious nodes {self.previous_node}')
+            print(f'\nSHORTEST PATH: {self.get_path(res)}')
+            return True
+
+        if minimum_coords == self.goal:
+            print(f'SUCCESS: found {minimum}\nunseen nodes {self.non_visited_nodes}\ndistances {self.lowest_distance}\nprevious nodes {self.previous_node}')
+            print(f'\nSHORTEST PATH: {self.get_path(minimum_coords)}')
+            return True
+
+        self.non_visited_nodes.remove(minimum)
+
+        print(f'currently on {minimum}\nunseen nodes {self.non_visited_nodes}\ndistances {self.lowest_distance}\nprevious nodes {self.previous_node}')
+        return None
+
 
     def get_minimum_distance_node(self):
         l = [k for k in self.lowest_distance.keys() if k in self.non_visited_nodes]
@@ -112,11 +113,14 @@ class Dijkstra(Default):
 
 
     def get_path(self, coords):
-        num = self.table[coords[0]][coords[1]]
+        node = self.table[coords[0]][coords[1]]
         path = []
-        while num != self.table[self.start[0]][self.start[1]]:
-            path.append(num)
-            num = self.previous_node[num]
-        path.append(num)
+        while node != self.table[self.start[0]][self.start[1]]:
+            path.append(node)
+            node = self.previous_node[node]
+        path.append(node)
 
+        self.path = path
         return(path)
+
+    

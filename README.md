@@ -4,4 +4,4 @@ Program that lets you draw your own path or pick a default one / a maze and visu
 # How to run
 Simply download the repo and execute the [main.py](https://github.com/MrC3drik/path-finding-visualizer/blob/master/main.py) file 
 
-# Note: at this point only dijkstra algorithm is implemented
+Note: at this point only dijkstra algorithm is implemented

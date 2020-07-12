@@ -13,6 +13,7 @@ class Default():
 
     def set_table(self, table):
         self.table = table
+        self.__init__(table)
 
     
     def get_table(self):

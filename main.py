@@ -26,7 +26,7 @@ def run():
     run_algo = False
 
     # algo
-    table = make_empty_table(table_width, table_height, start = (7,6), end=(30,17))
+    table = make_empty_table(table_width, table_height, start = (21,12), end=(39,12))
     dj = Dijkstra(table)
 
     while run:
@@ -52,6 +52,12 @@ def run():
 
 
         # draw GUI
+        minimize = pygame.draw.rect(screen, (173, 176, 227), pygame.Rect(WIDTH - 80, 10, 30, 20))
+        screen.blit(pygame.font.SysFont('Arial', 20).render('-', True, (0,0,0)), (WIDTH - 67, 6))
+
+        close = pygame.draw.rect(screen, (173, 176, 227), pygame.Rect(WIDTH - 40, 10, 30, 20))
+        screen.blit(pygame.font.SysFont('Arial', 20).render('X', True, (0,0,0)), (WIDTH - 30, 8))
+
         start = pygame.draw.rect(screen, (173, 176, 227), pygame.Rect(WIDTH / 2 - 170, sp_y / 2 - 30, 160, 60))
         screen.blit(pygame.font.SysFont('Arial', 25).render('RUN ALGO', True, (0,0,0)), (WIDTH / 2 - 145, sp_y / 2 - 15))
 
@@ -118,8 +124,19 @@ def run():
                     pass
 
             # handle wheel click on board (move objects)
-            #! To Do
-           
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 2 and not run_algo:
+                starting_pos = event.pos
+            
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 2 and not run_algo:
+                final_pos = event.pos
+                st_x, st_y = (round(starting_pos[0] - sp_x/2)//31, round(starting_pos[1] - sp_y + sp_x/2)//31)
+                fi_x, fi_y = (round(final_pos[0] - sp_x/2)//31, round(final_pos[1] - sp_y + sp_x/2)//31)
+                print(f'down in {st_x,st_y} up in {fi_x,fi_y}')
+                if (table[st_x][st_y] == 'start' or table[st_x][st_y] == 'end') and (table[fi_x][fi_y] != 'start' and table[fi_x][fi_y] != 'end') and (starting_pos[0] >= sp_x/2 and starting_pos[0] <= (WIDTH - sp_x/2) and starting_pos[1] >= sp_y - sp_x/2 and starting_pos[1] < HEIGHT - sp_x/2) and (final_pos[0] >= sp_x/2 and final_pos[0] <= (WIDTH - sp_x/2) and final_pos[1] >= sp_y - sp_x/2 and final_pos[1] < HEIGHT - sp_x/2):
+                    table[fi_x][fi_y] = table[st_x][st_y]
+                    table[st_x][st_y] = f'space-{st_x}-{st_y}'
+                    dj.set_table(table)
+        
             
             # start algo
             if pygame.mouse.get_pressed()[0] and start.collidepoint(pygame.mouse.get_pos()) and not run_algo:
@@ -128,8 +145,17 @@ def run():
 
             # clear path
             if pygame.mouse.get_pressed()[0] and clear.collidepoint(pygame.mouse.get_pos()) and not run_algo:
-                table = make_empty_table(table_width, table_height, start = (7,6), end=(30,17))
+                table = make_empty_table(table_width, table_height, start = (21,12), end=(39,12))
                 dj = Dijkstra(table)
+            
+            # minimize
+            if pygame.mouse.get_pressed()[0] and minimize.collidepoint(pygame.mouse.get_pos()) and not run_algo:
+                pygame.display.iconify()
+                
+            # close
+            if pygame.mouse.get_pressed()[0] and close.collidepoint(pygame.mouse.get_pos()) and not run_algo:
+                pygame.quit() 
+                return None
 
         
         pygame.display.update()

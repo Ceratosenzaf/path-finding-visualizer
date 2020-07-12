@@ -129,5 +129,3 @@ class Dijkstra(Default):
 
         self.path = path
         return(path)
-
-    

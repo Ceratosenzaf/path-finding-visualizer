@@ -53,16 +53,16 @@ def run():
 
         # draw GUI
         minimize = pygame.draw.rect(screen, (173, 176, 227), pygame.Rect(WIDTH - 80, 10, 30, 20))
-        screen.blit(pygame.font.SysFont('Arial', 20).render('-', True, (0,0,0)), (WIDTH - 67, 6))
+        screen.blit(pygame.font.SysFont('Arial', 20, True).render('-', True, (0,0,0)), (WIDTH - 67, 6))
 
         close = pygame.draw.rect(screen, (173, 176, 227), pygame.Rect(WIDTH - 40, 10, 30, 20))
-        screen.blit(pygame.font.SysFont('Arial', 20).render('X', True, (0,0,0)), (WIDTH - 30, 8))
+        screen.blit(pygame.font.SysFont('Arial', 20, True).render('X', True, (0,0,0)), (WIDTH - 30, 8))
 
         start = pygame.draw.rect(screen, (173, 176, 227), pygame.Rect(WIDTH / 2 - 170, sp_y / 2 - 30, 160, 60))
         screen.blit(pygame.font.SysFont('Arial', 25).render('RUN ALGO', True, (0,0,0)), (WIDTH / 2 - 145, sp_y / 2 - 15))
 
         clear = pygame.draw.rect(screen, (173, 176, 227), pygame.Rect(WIDTH / 2 + 10, sp_y / 2 - 30, 160, 60))
-        screen.blit(pygame.font.SysFont('Arial', 25).render('CLEAR', True, (0,0,0)), (WIDTH / 2 + 50, sp_y / 2 - 15))
+        screen.blit(pygame.font.SysFont('Arial', 25).render('CLEAR', True, (0,0,0)), (WIDTH / 2 + 53, sp_y / 2 - 15))
 
 
         # draw table
@@ -123,7 +123,7 @@ def run():
                 except:
                     pass
 
-            # handle wheel click on board (move objects)
+            # handle wheel click on board (move start/end)
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 2 and not run_algo:
                 starting_pos = event.pos
             
@@ -131,7 +131,6 @@ def run():
                 final_pos = event.pos
                 st_x, st_y = (round(starting_pos[0] - sp_x/2)//31, round(starting_pos[1] - sp_y + sp_x/2)//31)
                 fi_x, fi_y = (round(final_pos[0] - sp_x/2)//31, round(final_pos[1] - sp_y + sp_x/2)//31)
-                print(f'down in {st_x,st_y} up in {fi_x,fi_y}')
                 if (table[st_x][st_y] == 'start' or table[st_x][st_y] == 'end') and (table[fi_x][fi_y] != 'start' and table[fi_x][fi_y] != 'end') and (starting_pos[0] >= sp_x/2 and starting_pos[0] <= (WIDTH - sp_x/2) and starting_pos[1] >= sp_y - sp_x/2 and starting_pos[1] < HEIGHT - sp_x/2) and (final_pos[0] >= sp_x/2 and final_pos[0] <= (WIDTH - sp_x/2) and final_pos[1] >= sp_y - sp_x/2 and final_pos[1] < HEIGHT - sp_x/2):
                     table[fi_x][fi_y] = table[st_x][st_y]
                     table[st_x][st_y] = f'space-{st_x}-{st_y}'
@@ -157,7 +156,7 @@ def run():
                 pygame.quit() 
                 return None
 
-        
+        # refresh screen
         pygame.display.update()
 
 

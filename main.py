@@ -148,11 +148,11 @@ def run():
                 dj = Dijkstra(table)
             
             # minimize
-            if pygame.mouse.get_pressed()[0] and minimize.collidepoint(pygame.mouse.get_pos()) and not run_algo:
+            if pygame.mouse.get_pressed()[0] and minimize.collidepoint(pygame.mouse.get_pos()):
                 pygame.display.iconify()
                 
             # close
-            if pygame.mouse.get_pressed()[0] and close.collidepoint(pygame.mouse.get_pos()) and not run_algo:
+            if pygame.mouse.get_pressed()[0] and close.collidepoint(pygame.mouse.get_pos()):
                 pygame.quit() 
                 return None
 
